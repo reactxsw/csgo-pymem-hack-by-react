@@ -2,83 +2,50 @@ import colorama, time, os, pymem, keyboard , re ,pymem.process , socket , subpro
 from os import system
 from math import sqrt , pi ,atan
 from pypresence import Presence
-import tkinter as tk
-from tkinter import Tk, ttk
-from tkinter.ttk import *
-from PIL import ImageTk, Image
-from threading import Thread
 
 #colour
 CEND      = '\33[0m'
 CRED    = '\33[31m'
 current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
 
-root = Tk()
+#hash-changer ทําให้ไฟล์ดูเเตกต่างควรเปลี่ยนบ่อยๆ เพื่อที่จะ undetect
 
-unreal = """
-    __  __                      _______ __   _ ____
-  / / / /___  ________  ____ _/ / ___// /__(_) / /
- / / / / __ \/ ___/ _ \/ __ `/ /\__ \/ //_/ / / / 
-/ /_/ / / / / /  /  __/ /_/ / /___/ / ,< / / / /  
-\____/_/ /_/_/   \___/\__,_/_//____/_/|_/_/_/_/                                                    
-"""
+antivac = "{!cg$!4Bp3^&zn95T:X\KnHdr;}+j]&"
 
-def GUI():
-    style = ttk.Style()
-    style.configure('Style.TButton', font='TkFixedFont')
-    root.geometry("400x325")
-    root.title("UnrealSkillz")
+def username():
+    a = input("USERNAME : ")
 
+    with open('username.cfg' , 'w') as username:
+        username.write(a)
 
-    root.iconbitmap("C://Users//FIN//Documents//python//react_bot//discord bot//rpcphoto.ico")
-    image = ImageTk.PhotoImage(Image.open("E:/unrealskilllogo.png"))
+    with open('username.cfg', 'r') as usernameread:
+        global name
+        name = usernameread.read()
 
-    myLabel1 = Label(root, text="made by React")
-    myLabel2 = Label(image=image)
-    myLabel3 = Label(root, text=f"Login as React    | Smilewin")
-    myLabel4 = Label(root, text="================================")
-    myLabel5 = Label(root, text=" Triggerbot     | 'X' (Hold)")
-    myLabel6 = Label(root, text=" Aimbot         | 'ALT' (Hold)")
-    myLabel7 = Label(root, text=" Bunnyhop       | 'SPACEBAR' (Hold)")
-    myLabel8 = Label(root, text=" Wallhack       | 'F1' (Toggle)")
-    myLabel9 = Label(root, text=" Thirdperson    | 'F6' (Toggle)")
-    myLabel10 = Label(root, text=" RCS            | 'C' (Toggle)")
-    myLabel11 = Label(root, text=" Off hack       | 'End' (Press)")
-    myLabel12 = Label(root, text="================================")
-    myLabel13 = Label(root, text=f'IP : ' + socket.gethostbyname(socket.gethostname()))
-    myLabel14 = Label(root, text=f'HWID : ' + current_machine_id)
-
-    myLabel1.grid(row=0, column=0)
-    myLabel2.grid(row=1, column=0)
-    myLabel3.grid(row=2, column=0)
-    myLabel4.grid(row=3, column=0)
-    myLabel5.grid(row=4, column=0)
-    myLabel6.grid(row=5, column=0)
-    myLabel7.grid(row=6, column=0)
-    myLabel8.grid(row=7, column=0)
-    myLabel9.grid(row=8, column=0)
-    myLabel10.grid(row=9, column=0)
-    myLabel11.grid(row=10, column=0)
-    myLabel12.grid(row=11, column=0)
-    myLabel13.grid(row=12, column=0)
-    myLabel14.grid(row=13, column=0)
-
-    myLabel1.place(relx= 0.0, rely=1.0, anchor="e")
-
-    root.mainloop()
-    
+def logicusername():
+    try:
+        with open('username.cfg', 'r') as usernameread:
+            global name
+            name = usernameread.read()
+    except:
+        username()
+        
+logicusername()
 
 unreal = ("""
    __  __                      _______ __   _ ____
   / / / /___  ________  ____ _/ / ___// /__(_) / /
  / / / / __ \/ ___/ _ \/ __ `/ /\__ \/ //_/ / / / 
 / /_/ / / / / /  /  __/ /_/ / /___/ / ,< / / / /  
-\____/_/ /_/_/   \___/\__,_/_//____/_/|_/_/_/_/                                                    
-""")
+\____/_/ /_/_/   \___/\__,_/_//____/_/|_/_/_/_/ 
+                                -By REACT#1120                                                   """)
+
+logo = (CRED + unreal + CEND)
 
 def menu():
-    print("Login as member | Smilewin")
-    print("================================")
+    print(logo)
+    print(f" Login as " + name + " | Smilewin")
+    print("===================================")
     print(" Triggerbot     | 'X' (Hold)")
     print(" Aimbot         | 'ALT' (Hold)")
     print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
@@ -88,11 +55,9 @@ def menu():
     print(" Thirdperson    | 'F6' (Toggle)") 
     print(" RCS            | 'C' (Toggle)")
     print(" Off hack       | 'End' (Press)")
-    print("================================")
+    print("===================================")
     print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
     print(f'HWID : ' + current_machine_id)
-
-logo = (CRED + unreal + CEND)
 
 def downloadvacbypasser():
     vacbypassurl = 'https://cdn-33.anonfiles.com/P0mcY6hdpc/9bff18b9-1603279833/VAC.exe'
@@ -118,6 +83,7 @@ def Authenticator():
         vacbypasser()
         print("VAC bypasser loaded")
         print('Error : HWID not in database')
+        print('contact admin : REACT#1120 ')
         print(f'Invalid HWID :' + current_machine_id)
         a = input('')
         time.sleep(5)
@@ -161,6 +127,9 @@ os.system('color 08')
 r = requests.get("https://raw.githubusercontent.com/reactxsw/hwiddump/main/csgo.h")
 r = r.text
 
+
+#lol copy pasted xD xD no one can code without the ctrl+c  and de ctrl+v xD xD
+# xD im mr. stealurcode hahahahah
 offsets = ["dwEntityList", "dwLocalPlayer","m_flFlashMaxAlpha", "m_iTeamNum", "dwGlowObjectManager", "m_iGlowIndex", "dwForceJump", "m_fFlags", "dwForceAttack", "m_iCrosshairId", "m_bSpotted", "m_iShotsFired", "m_aimPunchAngle", "dwClientState", "dwClientState_ViewAngles","m_iObserverMode","m_bIsDefusing","m_bGunGameImmunity","m_iHealth","m_dwBoneMatrix","m_vecOrigin","m_vecViewOffset","m_bDormant","dwbSendPackets","dwInput","clientstate_last_outgoing_command","clientstate_net_channel"]
 
 d = {}
@@ -196,8 +165,8 @@ m_iObserverMode = int(d["m_iObserverMode"], base = 16)
 m_bIsDefusing = int(d["m_bIsDefusing"], base = 16)
 m_iHealth = int(d["m_iHealth"], base = 16)
 m_bGunGameImmunity = int(d["m_bGunGameImmunity"], base = 16)
-m_iDefaultFOV = (0x332C) # Welp not on Hazedumper (Special Offset)
-m_totalHitsOnServer = (0xA3A8) # Welp not on Hazedumper (Special Offset)
+m_iDefaultFOV = (0x332C)
+m_totalHitsOnServer = (0xA3A8) 
 m_dwBoneMatrix = int(d["m_dwBoneMatrix"], base = 16)
 m_vecOrigin = int(d["m_vecOrigin"], base = 16)
 m_vecViewOffset = int(d["m_vecViewOffset"], base = 16)
@@ -275,6 +244,8 @@ def calcangle(localpos1, localpos2, localpos3, enemypos1, enemypos2, enemypos3):
     except:
         pass        
 
+#function ต่างๆของ hackอยู่ใน main(): 
+
 def main():
     EnableGlowESP = False #เปิดปิด wallhack
     Enablethird = False #เปิดปิด third person
@@ -282,7 +253,6 @@ def main():
     EnableRCS = False#เปิดปิด rcs
     Enableradar = False#เปิดปิด radar
     os.system("cls")
-    print(logo)
     menu()
     global amount
     oldpunchx = 0.0
@@ -315,6 +285,7 @@ def main():
                 oldpunchy = 0.0
                 newrcsx = 0.0
                 newrcsy = 0.0
+#reduc rpm/wpm               
         localPlayer = pm.read_int(client + dwLocalPlayer)
         player = pm.read_int(client + dwLocalPlayer)
         engine_pointer = pm.read_int(engine + dwClientState)
@@ -390,8 +361,6 @@ def main():
             time.sleep(0.5)
             if Enablethird:
                 pm.write_int(entity + m_bSpotted, 1)
-            else:
-                pm.write_int(entity + m_bSpotted, 0)
         
         if keyboard.is_pressed("space"):
             force_jump = client + dwForceJump
@@ -426,12 +395,26 @@ def main():
             else:
                 pm.write_int(localPlayer + m_iObserverMode,0) 
                        
-        if keyboard.is_pressed("end"):
-            exit(0) 
- 
-         
+#check ว่าอยู่ใน match หรือป่าวถ้าอยู่มันจะรันเเต่ถ้าไม่อยู่มันจะรอ
+
+def matchcheck():
+    match = True
+    while match == True:
+        try:
+            time.sleep(1)
+            main()
+            match = False
+            print("status : in-game ")
+            if keyboard.is_pressed("end"):
+                exit(0)
+        except:
+            time.sleep(1)
+            print("status : in lobby ")
+            if keyboard.is_pressed("end"):
+                exit(0)
+    
 if __name__ == '__main__':
-    main()
+    matchcheck()
  
     
 
