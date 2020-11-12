@@ -1,0 +1,15 @@
+colorama
+time
+os
+pymem 
+keyboard 
+re 
+pymem.process 
+socket 
+subprocess 
+math 
+requests 
+ctypes 
+psutil 
+urllib 
+
