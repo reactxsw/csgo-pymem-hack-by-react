@@ -1,37 +1,60 @@
-import colorama, time, os, pymem, keyboard , re ,pymem.process , socket , subprocess ,math ,requests ,ctypes , psutil , urllib 
+import colorama, time, os, pymem, keyboard , re ,pymem.process , socket , subprocess ,math ,requests ,ctypes , psutil , urllib, configparser , random, string
 from os import system
 from math import sqrt , pi ,atan
 from pypresence import Presence
-
+from pathlib import Path
 #colour
 CEND      = '\33[0m'
+CGREEN2  = '\33[92m'
+CBLUE   = '\33[34m'
 CRED    = '\33[31m'
+CYELLOW = '\33[33m'
+
 current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
 
 #hash-changer ทําให้ไฟล์ดูเเตกต่างควรเปลี่ยนบ่อยๆ เพื่อที่จะ undetect
 
 antivac = "{!cg$!4Bp3^&zn95T:X\KnHdr;}+j]&"
 
-def username():
-    a = input("USERNAME : ")
+def write_default_settings():
+    global name
+    name = input("USERNAME : ")
 
-    with open('username.cfg' , 'w') as username:
-        username.write(a)
+    with open("SETTING.ini", "w") as file:
+        file.writelines(
+            [
+                "[DEFAULT]\n",
+                "\n",
+                f"usn = " + name + "\n",
+                " \n",
+                "tb = X\n",
+                " \n",
+                "ab = ALT\n",
+                " \n",
+                "wh = F1\n",
+                " \n",
+                "rh = F2\n",
+                " \n",
+                "nf = F4\n",
+                "\n",
+                "tpp = F6\n",
+                "\n",
+                "rcs = C\n",
+                "\n",
+                "abfov = 4\n",
+            ]
+        )
 
-    with open('username.cfg', 'r') as usernameread:
-        global name
-        name = usernameread.read()
+def read_settings():
+    if not Path("SETTING.ini").exists():
+        write_default_settings()
+    config = configparser.ConfigParser()
+    config.read("SETTING.ini")
+    return config["DEFAULT"]
 
-def logicusername():
-    try:
-        with open('username.cfg', 'r') as usernameread:
-            global name
-            name = usernameread.read()
-    except:
-        username()
+settings = read_settings()
+
         
-logicusername()
-
 unreal = ("""
    __  __                      _______ __   _ ____
   / / / /___  ________  ____ _/ / ___// /__(_) / /
@@ -42,28 +65,7 @@ unreal = ("""
 
 logo = (CRED + unreal + CEND)
 
-def menu():
-    print(logo)
-    print(f" Login as " + name + " | Smilewin")
-    print("===================================")
-    print(" Triggerbot     | 'X' (Hold)")
-    print(" Aimbot         | 'ALT' (Hold)")
-    print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
-    print(" Wallhack       | 'F1' (Toggle)")
-    print(" Radar          | 'F2' (Toggle)")
-    print(" No flash       | 'F4' (Toggle)")
-    print(" Thirdperson    | 'F6' (Toggle)") 
-    print(" RCS            | 'C' (Toggle)")
-    print(" Off hack       | 'End' (Press)")
-    print("===================================")
-    print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
-    print(f'HWID : ' + current_machine_id)
-
-def downloadvacbypasser():
-    vacbypassurl = 'https://cdn-33.anonfiles.com/P0mcY6hdpc/9bff18b9-1603279833/VAC.exe'
-    print(vacbypassurl)
-    print('working on this function')
-
+    
 try:
     current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
     r = requests.get('https://raw.githubusercontent.com/reactxsw/hwiddump/main/hwid.txt')
@@ -78,9 +80,17 @@ def vacbypasser():
     subprocess.call(vac,shell=True)
     print("VAC bypasser loaded")
 
+def check_for_vacbypasser():
+    if Path("VAC.exe").exists():
+        vacbypasser()
+    
+    else: 
+        print("VAC bypasser failed to load")
+
+
 def Authenticator():
     if not current_machine_id in r.text:
-        vacbypasser()
+        check_for_vacbypasser()
         print("VAC bypasser loaded")
         print('Error : HWID not in database')
         print('contact admin : REACT#1120 ')
@@ -101,9 +111,10 @@ def check4process(processName):
                 return True
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
-    return False;
+    return False
 
 def gamecheck():
+
     if check4process('csgo.exe'):
         return True
     else:
@@ -115,7 +126,10 @@ def gamecheck():
 gamecheck()
 
 def afterbypass():
-    print("VACbypasser loaded")
+    if Path("VAC.exe").exists():
+        print("VACbypasser loaded")
+    else:
+        print("VAC bypasser failed to load")
 
 afterbypass()
 
@@ -127,9 +141,6 @@ os.system('color 08')
 r = requests.get("https://raw.githubusercontent.com/reactxsw/hwiddump/main/csgo.h")
 r = r.text
 
-
-#lol copy pasted xD xD no one can code without the ctrl+c  and de ctrl+v xD xD
-# xD im mr. stealurcode hahahahah
 offsets = ["dwEntityList", "dwLocalPlayer","m_flFlashMaxAlpha", "m_iTeamNum", "dwGlowObjectManager", "m_iGlowIndex", "dwForceJump", "m_fFlags", "dwForceAttack", "m_iCrosshairId", "m_bSpotted", "m_iShotsFired", "m_aimPunchAngle", "dwClientState", "dwClientState_ViewAngles","m_iObserverMode","m_bIsDefusing","m_bGunGameImmunity","m_iHealth","m_dwBoneMatrix","m_vecOrigin","m_vecViewOffset","m_bDormant","dwbSendPackets","dwInput","clientstate_last_outgoing_command","clientstate_net_channel"]
 
 d = {}
@@ -180,9 +191,6 @@ clientstate_net_channel = int(d["clientstate_net_channel"], base = 16)
 pm = pymem.Pymem("csgo.exe")
 client = pymem.process.module_from_name(pm.process_handle, "client.dll").lpBaseOfDll
 engine = pymem.process.module_from_name(pm.process_handle, "engine.dll").lpBaseOfDll
-
-#aimbot angle ยิ่งน้อยยิ่งเนียน 120 = ที่เห็นข้างหน้า 360 = รอบตัว
-aimfov = 4
 
 def normalizeAngles(viewAngleX, viewAngleY):
     if viewAngleX > 89:
@@ -247,20 +255,50 @@ def calcangle(localpos1, localpos2, localpos3, enemypos1, enemypos2, enemypos3):
 #function ต่างๆของ hackอยู่ใน main(): 
 
 def main():
+    os.system("cls")
+    try:
+        Username = settings["usn"]
+        Triggerbot = settings["tb"]
+        Radarhack = settings["rh"]
+        Aimbot = settings["ab"]
+        Wallhack = settings["wh"]
+        Noflash = settings["nf"]
+        Thirdperson = settings["tpp"]
+        RecoilScript = settings["rcs"]
+        Aimbotfov = settings["abfov"]
+        aimfov = int(Aimbotfov)
+    except:
+        print("config failed to load.")
+        print("Delete SETTING.ini to reinstall config")
+        cf = input('')
+    print(logo)
+    print(f" Login as " + Username + " | Smilewin")
+    print("===================================")
+    print(" Triggerbot     | "+ Triggerbot + " (Hold)")
+    print(" Aimbot         | "+ Aimbot + " (Hold)")
+    print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
+    print(" Wallhack       | "+ Wallhack + " (Toggle)")
+    print(" Radarhack      | "+ Radarhack + " (Toggle)")
+    print(" No flash       | "+ Noflash + " (Toggle")
+    print(" Thirdperson    | "+ Thirdperson + " (Toggle)") 
+    print(" RCS            | "+ RecoilScript + " (Toggle)")
+    print(" Off hack       | 'End' (Press)")
+    print(" aimbotfov = " + Aimbotfov + "  |" ) 
+    print("===================================")
+    print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
+    print(f'HWID : ' + current_machine_id)
     EnableGlowESP = False #เปิดปิด wallhack
     Enablethird = False #เปิดปิด third person
     switch = 0 # flashbang
     EnableRCS = False#เปิดปิด rcs
-    Enableradar = False#เปิดปิด radar
-    os.system("cls")
-    menu()
+    Enableradar = False
     global amount
     oldpunchx = 0.0
     oldpunchy = 0.0
     while True:
         time.sleep(0.01)
 
-        if keyboard.is_pressed("C"):
+        if keyboard.is_pressed(RecoilScript):
             EnableRCS = not EnableRCS
             time.sleep(0.2)
             
@@ -285,7 +323,7 @@ def main():
                 oldpunchy = 0.0
                 newrcsx = 0.0
                 newrcsy = 0.0
-#reduc rpm/wpm               
+#reduce rpm/wpm               
         localPlayer = pm.read_int(client + dwLocalPlayer)
         player = pm.read_int(client + dwLocalPlayer)
         engine_pointer = pm.read_int(engine + dwClientState)
@@ -326,14 +364,21 @@ def main():
                         olddistx, olddisty = newdist_x, newdist_y
                         target, target_hp, target_dormant = entity, entity_hp, entity_dormant
                         target_x, target_y, target_z = entitypos_x, entitypos_y, entitypos_z
-                if keyboard.is_pressed("alt") and player:
+                if keyboard.is_pressed(Aimbot) and player:
                         if target and target_hp > 0 and not target_dormant:
                             x, y = calcangle(localpos1, localpos2, localpos3, target_x, target_y, target_z)
                             normalize_x, normalize_y = normalizeAngles(x, y)
                             pm.write_float(engine_pointer + dwClientState_ViewAngles, normalize_x)
-                            pm.write_float(engine_pointer + dwClientState_ViewAngles + 0x4, normalize_y)   
+                            pm.write_float(engine_pointer + dwClientState_ViewAngles + 0x4, normalize_y)
+                
+                if keyboard.is_pressed(Radarhack):
+                    Enableradar = not Enableradar
+                    time.sleep(0.2)
+
+                if Enableradar == True:
+                    pm.write_int(entity + m_bSpotted, 1)   
         
-        if keyboard.is_pressed("F1"):
+        if keyboard.is_pressed(Wallhack):
             EnableGlowESP = not EnableGlowESP
             time.sleep(0.2)         
         
@@ -355,13 +400,7 @@ def main():
                     pm.write_float(glow_manager + entity_glow * 0x38 + 0xC, float(1)) 
                     pm.write_float(glow_manager + entity_glow * 0x38 + 0x10, float(1)) 
                     pm.write_int(glow_manager + entity_glow * 0x38 + 0x24, 1)
-             
-        if keyboard.is_pressed("F2"):
-            Enableradar = not Enableradar
-            time.sleep(0.5)
-            if Enablethird:
-                pm.write_int(entity + m_bSpotted, 1)
-        
+                   
         if keyboard.is_pressed("space"):
             force_jump = client + dwForceJump
             on_ground = pm.read_int(player + m_fFlags)
@@ -371,50 +410,55 @@ def main():
                 time.sleep(0.08)
                 pm.write_int(force_jump, 4) 
        
-        if keyboard.is_pressed("F4") and switch == 0:
+        if keyboard.is_pressed(Noflash) and switch == 0:
             pm.write_float(flash_value, float(0))
             switch = 1
             time.sleep(0.2)
-        elif keyboard.is_pressed("F4") and switch == 1:
+        elif keyboard.is_pressed(Noflash) and switch == 1:
             pm.write_float(flash_value, float(255))
             switch = 0
             time.sleep(0.2)
 
-        if keyboard.is_pressed("X") and switch == 0:
+        if keyboard.is_pressed(Triggerbot) and switch == 0:
             if crosshairID>0 and crosshairID<32 and Localteam != crosshairTeam:
                 pm.write_int(client + dwForceAttack,6)
-        if keyboard.is_pressed("x") and switch == 1:
+        if keyboard.is_pressed(Triggerbot) and switch == 1:
             if crosshairID>0 and crosshairID<32 and Localteam != crosshairTeam:
                 pm.write_int(client + dwForceAttack,6)         
         
-        if keyboard.is_pressed("F6"):
+        if keyboard.is_pressed(Thirdperson):
             Enablethird = not Enablethird
             time.sleep(0.5)
             if Enablethird:
                 pm.write_int(localPlayer + m_iObserverMode,1)
             else:
                 pm.write_int(localPlayer + m_iObserverMode,0) 
-                       
+          
 #check ว่าอยู่ใน match หรือป่าวถ้าอยู่มันจะรันเเต่ถ้าไม่อยู่มันจะรอ
 
 def matchcheck():
-    match = True
-    while match == True:
+
+    while True:
         try:
+            main() 
             time.sleep(1)
-            main()
-            match = False
-            print("status : in-game ")
+
+            if not check4process('csgo.exe'):
+                time.sleep(1)
+                print(CRED + "status : not in game" + CEND)
+            
             if keyboard.is_pressed("end"):
                 exit(0)
+
         except:
             time.sleep(1)
-            print("status : in lobby ")
+            print(CBLUE + "status : in lobby " + CEND)
             if keyboard.is_pressed("end"):
                 exit(0)
-    
+        
 if __name__ == '__main__':
     matchcheck()
+
  
     
 
