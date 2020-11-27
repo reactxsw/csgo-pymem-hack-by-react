@@ -1,8 +1,9 @@
-import colorama, time, os, pymem, keyboard , re ,pymem.process , socket , subprocess ,math ,requests ,ctypes , psutil , urllib, configparser , random, string
+import colorama, time, os, pymem, keyboard , re ,pymem.process , socket , subprocess ,math ,requests ,ctypes , psutil , urllib, configparser ,os , sys
 from os import system
 from math import sqrt , pi ,atan
 from pypresence import Presence
 from pathlib import Path
+
 #colour
 CEND      = '\33[0m'
 CGREEN2  = '\33[92m'
@@ -12,6 +13,8 @@ CYELLOW = '\33[33m'
 
 current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
 
+
+os.system("title Unrealskill")
 #hash-changer ทําให้ไฟล์ดูเเตกต่างควรเปลี่ยนบ่อยๆ เพื่อที่จะ undetect
 
 antivac = "{!cg$!4Bp3^&zn95T:X\KnHdr;}+j]&"
@@ -42,6 +45,7 @@ def write_default_settings():
                 "rcs = C\n",
                 "\n",
                 "abfov = 4\n",
+                "\n",
             ]
         )
 
@@ -70,36 +74,42 @@ try:
     current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
     r = requests.get('https://raw.githubusercontent.com/reactxsw/hwiddump/main/hwid.txt')
 except:
-    print('Error : Internet connection')
+    print(CBLUE + '[UNREAL] : Error : Internet connection' + CEND)
     b = input('')
     time.sleep(2)
 
 def vacbypasser():
+
     dirname = os.path.dirname(os.path.abspath(__file__))
     vac = os.path.join(dirname, 'VAC.exe')
     subprocess.call(vac,shell=True)
-    print("VAC bypasser loaded")
+    print(CGREEN2 + "[UNREAL] : VAC bypasser loaded" + CEND)
 
 def check_for_vacbypasser():
     if Path("VAC.exe").exists():
         vacbypasser()
     
     else: 
-        print("VAC bypasser failed to load")
+        print(CBLUE + "[UNREAL] : VAC bypasser failed to load" + CEND)
 
 
 def Authenticator():
     if not current_machine_id in r.text:
         check_for_vacbypasser()
-        print("VAC bypasser loaded")
-        print('Error : HWID not in database')
-        print('contact admin : REACT#1120 ')
-        print(f'Invalid HWID :' + current_machine_id)
+        if len(sys.argv) < 2:  
+            for char in logo:
+                time.sleep(0.005)
+                sys.stdout.write(char)
+                sys.stdout.flush()
+            time.sleep(0.01)
+        print(CBLUE + '[UNREAL] : Error : HWID not in database' + CEND)
+        print(CBLUE + '[UNREAL] : contact admin : REACT#1120 for permission' +CEND)
+        print(CBLUE + f'[UNREAL] : Invalid HWID :' + current_machine_id + CEND)
         a = input('')
         time.sleep(5)
         exit()
     else:
-        print("Permission granted !")
+        print(CGREEN2 + "[UNREAL] : Permission granted !" + CEND)
         return True
 
 Authenticator()
@@ -119,17 +129,19 @@ def gamecheck():
         return True
     else:
         vacbypasser()
-        print('ERROR : CSGO is not running')
-        print('make sure csgo.exe is running')
+        print(CBLUE + '[UNREAL] : ERROR : CSGO is not running' + CEND)
+        print(CBLUE + '[UNREAL] : make sure csgo.exe is running' + CEND)
+        MessageBox = ctypes.windll.user32.MessageBoxW
+        MessageBox(None, 'CSGO is not running', 'No process found (csgo.exe)', 0)
         gc = input('')
 
 gamecheck()
 
 def afterbypass():
     if Path("VAC.exe").exists():
-        print("VACbypasser loaded")
+        print(CGREEN2 + "[UNREAL] : VACbypasser loaded" + CEND)
     else:
-        print("VAC bypasser failed to load")
+        print(CBLUE + "[UNREAL] : VAC bypasser failed to load" + CEND)
 
 afterbypass()
 
@@ -149,7 +161,6 @@ for i in range(len(offsets)):
     if offsets[i] in r:
         search = re.findall(str(offsets[i]) + '\s'"= (.*);", r)
         offs += search
-
 
 i = 0
 while i <= len(offsets)-1:
@@ -268,25 +279,9 @@ def main():
         Aimbotfov = settings["abfov"]
         aimfov = int(Aimbotfov)
     except:
-        print("config failed to load.")
-        print("Delete SETTING.ini to reinstall config")
-        cf = input('')
-    print(logo)
-    print(f" Login as " + Username + " | Smilewin")
-    print("===================================")
-    print(" Triggerbot     | "+ Triggerbot + " (Hold)")
-    print(" Aimbot         | "+ Aimbot + " (Hold)")
-    print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
-    print(" Wallhack       | "+ Wallhack + " (Toggle)")
-    print(" Radarhack      | "+ Radarhack + " (Toggle)")
-    print(" No flash       | "+ Noflash + " (Toggle")
-    print(" Thirdperson    | "+ Thirdperson + " (Toggle)") 
-    print(" RCS            | "+ RecoilScript + " (Toggle)")
-    print(" Off hack       | 'End' (Press)")
-    print(" aimbotfov = " + Aimbotfov + "  |" ) 
-    print("===================================")
-    print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
-    print(f'HWID : ' + current_machine_id)
+        print("[UNREAL] : config failed to load.")
+        print("[UNREAL] : Delete SETTING.ini to reinstall config")
+    
     EnableGlowESP = False #เปิดปิด wallhack
     Enablethird = False #เปิดปิด third person
     switch = 0 # flashbang
@@ -296,34 +291,8 @@ def main():
     oldpunchx = 0.0
     oldpunchy = 0.0
     while True:
-        time.sleep(0.01)
-
-        if keyboard.is_pressed(RecoilScript):
-            EnableRCS = not EnableRCS
-            time.sleep(0.2)
-            
-        if EnableRCS is True: 
-            rcslocalplayer = pm.read_int(client + dwLocalPlayer)
-            rcsengine = pm.read_int(engine + dwClientState)
-            if pm.read_int(rcslocalplayer + m_iShotsFired) > 2:
-                rcs_x = pm.read_float(rcsengine + dwClientState_ViewAngles)
-                rcs_y = pm.read_float(rcsengine + dwClientState_ViewAngles + 0x4)
-                punchx = pm.read_float(rcslocalplayer + m_aimPunchAngle)
-                punchy = pm.read_float(rcslocalplayer + m_aimPunchAngle + 0x4)
-                newrcsx = rcs_x - (punchx - oldpunchx) * 2
-                newrcsy = rcs_y - (punchy - oldpunchy) * 2
-                newrcs, newrcy = normalizeAngles(newrcsx, newrcsy)
-                oldpunchx = punchx
-                oldpunchy = punchy
-                if nanchecker(newrcsx, newrcsy) and checkangles(newrcsx, newrcsy):
-                    pm.write_float(rcsengine + dwClientState_ViewAngles, newrcsx)
-                    pm.write_float(rcsengine + dwClientState_ViewAngles + 0x4, newrcsy)
-            else:
-                oldpunchx = 0.0
-                oldpunchy = 0.0
-                newrcsx = 0.0
-                newrcsy = 0.0
-#reduce rpm/wpm               
+        # ทําทุกอย่างให้พร้อม เช่นอ่านค่าต่างๆ เเละบวกค่า
+        #reduce rpm/wpm     
         localPlayer = pm.read_int(client + dwLocalPlayer)
         player = pm.read_int(client + dwLocalPlayer)
         engine_pointer = pm.read_int(engine + dwClientState)
@@ -332,6 +301,32 @@ def main():
         flash_value = localPlayer + m_flFlashMaxAlpha
         getTeam = pm.read_int(client + dwEntityList + (crosshairID-1)* 0x10)
         crosshairTeam = pm.read_int(getTeam + m_iTeamNum)
+
+        time.sleep(0.01)
+        if keyboard.is_pressed(RecoilScript):
+            EnableRCS = not EnableRCS
+            time.sleep(0.2)
+            
+        if EnableRCS is True: 
+            if pm.read_int(localPlayer + m_iShotsFired) > 2:
+                rcs_x = pm.read_float(engine_pointer + dwClientState_ViewAngles)
+                rcs_y = pm.read_float(engine_pointer + dwClientState_ViewAngles + 0x4)
+                punchx = pm.read_float(localPlayer + m_aimPunchAngle)
+                punchy = pm.read_float(localPlayer + m_aimPunchAngle + 0x4)
+                newrcsx = rcs_x - (punchx - oldpunchx) * 2
+                newrcsy = rcs_y - (punchy - oldpunchy) * 2
+                newrcs, newrcy = normalizeAngles(newrcsx, newrcsy)
+                oldpunchx = punchx
+                oldpunchy = punchy
+                if nanchecker(newrcsx, newrcsy) and checkangles(newrcsx, newrcsy):
+                    pm.write_float(engine_pointer + dwClientState_ViewAngles, newrcsx)
+                    pm.write_float(engine_pointer + dwClientState_ViewAngles + 0x4, newrcsy)
+            else:
+                oldpunchx = 0.0
+                oldpunchy = 0.0
+                newrcsx = 0.0
+                newrcsy = 0.0
+          
         target = None
         olddistx = 111111111111
         olddisty = 111111111111
@@ -343,7 +338,7 @@ def main():
                     entity_hp = pm.read_int(entity + m_iHealth)
                     entity_dormant = pm.read_int(entity + m_bDormant)
                 except:
-                    print("Can't load player info")
+                    print(CBLUE + "[UNREAL] : Can't load player info" + CEND)
                 if Localteam != entity_team_id and entity_hp > 0:
                     entity_bones = pm.read_int(entity + m_dwBoneMatrix)
                     localpos_x_angles = pm.read_float(engine_pointer + dwClientState_ViewAngles)
@@ -432,32 +427,57 @@ def main():
             if Enablethird:
                 pm.write_int(localPlayer + m_iObserverMode,1)
             else:
-                pm.write_int(localPlayer + m_iObserverMode,0) 
-          
-#check ว่าอยู่ใน match หรือป่าวถ้าอยู่มันจะรันเเต่ถ้าไม่อยู่มันจะรอ
+                pm.write_int(localPlayer + m_iObserverMode,0)
+ 
+#หน้า menu โปร csgo + logo unrealskill
+    print(logo)
+    print(f" Login as " + Username + " | Smilewin")
+    print("===================================")
+    print(" Triggerbot     | "+ Triggerbot + " (Hold)")
+    print(" Aimbot         | "+ Aimbot + " (Hold)")
+    print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
+    print(" Wallhack       | "+ Wallhack + " (Toggle)")
+    print(" Radarhack      | "+ Radarhack + " (Toggle)")
+    print(" No flash       | "+ Noflash + " (Toggle")
+    print(" Thirdperson    | "+ Thirdperson + " (Toggle)") 
+    print(" RCS            | "+ RecoilScript + " (Toggle)")
+    print(" Off hack       | 'End' (Press)")
+    print(" aimbotfov = " + Aimbotfov + "  |" ) 
+    print("===================================")
+    print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
+    print(f'HWID : ' + current_machine_id)
 
-def matchcheck():
 
-    while True:
+#เเก้บัค
+def ควยใหญ่():
+    os.system("cls")
+    while True:                                                     
+        time.sleep(3)
         try:
-            main() 
-            time.sleep(1)
-
-            if not check4process('csgo.exe'):
-                time.sleep(1)
-                print(CRED + "status : not in game" + CEND)
-            
-            if keyboard.is_pressed("end"):
-                exit(0)
-
-        except:
-            time.sleep(1)
-            print(CBLUE + "status : in lobby " + CEND)
-            if keyboard.is_pressed("end"):
-                exit(0)
+            os.system("cls")
+            main()
         
+        except:
+            os.system("cls")
+            if len(sys.argv) < 2:
+ 
+                for char in logo:
+                    time.sleep(0.01)
+                    sys.stdout.write(char)
+                    sys.stdout.flush()
+                time.sleep(0.5)
+            print("")
+            print("")
+            print(CBLUE + "[UNREAL] : The Cheat failed to load / in- lobby" + CEND)
+
+            print(CBLUE + "[UNREAL] : Retrying..." + CEND)
+
+ 
+
 if __name__ == '__main__':
-    matchcheck()
+    ควยใหญ่()
+
+
 
  
     
