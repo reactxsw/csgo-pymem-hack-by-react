@@ -462,7 +462,7 @@ def ควยใหญ่():
             if len(sys.argv) < 2:
  
                 for char in logo:
-                    time.sleep(0.01)
+                    time.sleep(0.0075)
                     sys.stdout.write(char)
                     sys.stdout.flush()
                 time.sleep(0.5)
@@ -471,8 +471,6 @@ def ควยใหญ่():
             print(CBLUE + "[UNREAL] : The Cheat failed to load / in- lobby" + CEND)
 
             print(CBLUE + "[UNREAL] : Retrying..." + CEND)
-
- 
 
 if __name__ == '__main__':
     ควยใหญ่()
