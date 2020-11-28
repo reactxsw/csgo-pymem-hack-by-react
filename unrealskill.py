@@ -114,6 +114,17 @@ def Authenticator():
 
 Authenticator()
 
+def Check_for_update():
+    r = requests.get('https://raw.githubusercontent.com/reactxsw/csgo-pymem-hack-by-react/main/update.txt')
+    if not "q97Skn5wkS64TLpVaDRXErHJmxpKKDHw7EuGf7tDfzZMeGq226ggwwV9J8hJJcnv" in r.text:
+        print(CBLUE + "[UNREAL] : update found" + CEND)
+        MessageBox = ctypes.windll.user32.MessageBoxW
+        MessageBox(None, 'There is an update available' , 'Update is found', 0)
+    else:
+        print(CGREEN2 + "[UNREAL] : Client is up to date" + CEND)
+
+Check_for_update()
+
 def check4process(processName):
     for proc in psutil.process_iter():
         try:
@@ -278,9 +289,27 @@ def main():
         RecoilScript = settings["rcs"]
         Aimbotfov = settings["abfov"]
         aimfov = int(Aimbotfov)
+        
     except:
-        print("[UNREAL] : config failed to load.")
+        print(CBLUE + "[UNREAL] : config failed to load." + CEND)
         print("[UNREAL] : Delete SETTING.ini to reinstall config")
+    
+    print(logo)
+    print(f" Login as " + Username + " | Smilewin")
+    print("===================================")
+    print(" Triggerbot     | "+ Triggerbot + " (Hold)")
+    print(" Aimbot         | "+ Aimbot + " (Hold)")
+    print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
+    print(" Wallhack       | "+ Wallhack + " (Toggle)")
+    print(" Radarhack      | "+ Radarhack + " (Toggle)")
+    print(" No flash       | "+ Noflash + " (Toggle")
+    print(" Thirdperson    | "+ Thirdperson + " (Toggle)") 
+    print(" RCS            | "+ RecoilScript + " (Toggle)")
+    print(" Off hack       | 'End' (Press)")
+    print(" aimbotfov = " + Aimbotfov + "  |" ) 
+    print("===================================")
+    print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
+    print(f'HWID : ' + current_machine_id)
     
     EnableGlowESP = False #เปิดปิด wallhack
     Enablethird = False #เปิดปิด third person
@@ -428,24 +457,7 @@ def main():
                 pm.write_int(localPlayer + m_iObserverMode,1)
             else:
                 pm.write_int(localPlayer + m_iObserverMode,0)
- 
-#หน้า menu โปร csgo + logo unrealskill
-    print(logo)
-    print(f" Login as " + Username + " | Smilewin")
-    print("===================================")
-    print(" Triggerbot     | "+ Triggerbot + " (Hold)")
-    print(" Aimbot         | "+ Aimbot + " (Hold)")
-    print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
-    print(" Wallhack       | "+ Wallhack + " (Toggle)")
-    print(" Radarhack      | "+ Radarhack + " (Toggle)")
-    print(" No flash       | "+ Noflash + " (Toggle")
-    print(" Thirdperson    | "+ Thirdperson + " (Toggle)") 
-    print(" RCS            | "+ RecoilScript + " (Toggle)")
-    print(" Off hack       | 'End' (Press)")
-    print(" aimbotfov = " + Aimbotfov + "  |" ) 
-    print("===================================")
-    print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
-    print(f'HWID : ' + current_machine_id)
+    
 
 
 #เเก้บัค
