@@ -3,6 +3,7 @@ from os import system
 from math import sqrt , pi ,atan
 from pypresence import Presence
 from pathlib import Path
+from colorama import Fore, init, Back, Style
 
 #colour
 CEND      = '\33[0m'
@@ -17,7 +18,12 @@ current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode()
 os.system("title Unrealskill")
 #hash-changer ทําให้ไฟล์ดูเเตกต่างควรเปลี่ยนบ่อยๆ เพื่อที่จะ undetect
 
-antivac = "{!cg$!4Bp3^&zn95T:X\KnHdr;}+j]&"
+def Spinner():
+	l = ['|', '/', '-', '\\']
+	for i in l+l+l:
+		sys.stdout.write('\r' + Style.BRIGHT + Fore.YELLOW + Back.BLACK +'[UNREAL] Loading... '+i)
+		sys.stdout.flush()
+		time.sleep(0.2)
 
 def write_default_settings():
     global name
@@ -46,6 +52,7 @@ def write_default_settings():
                 "\n",
                 "abfov = 4\n",
                 "\n",
+                "rpc = True\n"
             ]
         )
 
@@ -102,13 +109,15 @@ def Authenticator():
                 sys.stdout.write(char)
                 sys.stdout.flush()
             time.sleep(0.01)
+        Spinner()
+        os.system("cls")
         print(CBLUE + '[UNREAL] : Error : HWID not in database' + CEND)
         print(CBLUE + '[UNREAL] : contact admin : REACT#1120 for permission' +CEND)
         print(CBLUE + f'[UNREAL] : Invalid HWID :' + current_machine_id + CEND)
         a = input('')
-        time.sleep(5)
-        exit()
     else:
+        Spinner()
+        os.system("cls")
         print(CGREEN2 + "[UNREAL] : Permission granted !" + CEND)
         return True
 
@@ -116,7 +125,7 @@ Authenticator()
 
 def Check_for_update():
     r = requests.get('https://raw.githubusercontent.com/reactxsw/csgo-pymem-hack-by-react/main/update.txt')
-    if not "q97Skn5wkS64TLpVaDRXErHJmxpKKDHw7EuGf7tDfzZMeGq226ggwwV9J8hJJcnv" in r.text:
+    if not "ygQkZhGgA7k495PDxvX7BRdsV3NenBeDr9fyU8ma4CccZWVAXpCEwyBERzF6HJUL43gVtAXmYKeSZJdSQNKZ4CRb4TkQbjtKDsHLpU6dYSbgfN767hQaRHFmyu2qaS6T" in r.text:
         print(CBLUE + "[UNREAL] : update found" + CEND)
         MessageBox = ctypes.windll.user32.MessageBoxW
         MessageBox(None, 'There is an update available' , 'Update is found', 0)
@@ -156,9 +165,10 @@ def afterbypass():
 
 afterbypass()
 
-rpc = Presence("764516498899206224")
-rpc.connect()
-rpc.update(state="Hacking",details="Join Unrealskill for an unrealskill", join="https://discord.gg/XeTzykXvkcGtsHFES6z3F" ,large_image="rpcphoto",small_image="thai" ,start=time.time())    
+def disrpc():
+    rpc = Presence("764516498899206224")
+    rpc.connect()
+    rpc.update(state="Hacking",details="Join Unrealskill for an unrealskill", join="https://discord.gg/XeTzykXvkcGtsHFES6z3F" ,large_image="rpcphoto",small_image="thai" ,start=time.time())    
 
 os.system('color 08')
 r = requests.get("https://raw.githubusercontent.com/reactxsw/hwiddump/main/csgo.h")
@@ -277,6 +287,7 @@ def calcangle(localpos1, localpos2, localpos3, enemypos1, enemypos2, enemypos3):
 #function ต่างๆของ hackอยู่ใน main(): 
 
 def main():
+    Spinner()
     os.system("cls")
     try:
         Username = settings["usn"]
@@ -288,11 +299,21 @@ def main():
         Thirdperson = settings["tpp"]
         RecoilScript = settings["rcs"]
         Aimbotfov = settings["abfov"]
+        discordrpc = settings["rpc"]
+        Discordrichpresence = bool(discordrpc)
         aimfov = int(Aimbotfov)
         
     except:
         print(CBLUE + "[UNREAL] : config failed to load." + CEND)
-        print("[UNREAL] : Delete SETTING.ini to reinstall config")
+        print(CBLUE + "[UNREAL] : Delete SETTING.ini to reinstall config" + CEND)
+    
+    if Discordrichpresence == True:
+        disrpc()
+        drpc = "ON"
+    
+    else:
+        return True
+        drpc = "OFF"
     
     print(logo)
     print(f" Login as " + Username + " | Smilewin")
@@ -307,6 +328,7 @@ def main():
     print(" RCS            | "+ RecoilScript + " (Toggle)")
     print(" Off hack       | 'End' (Press)")
     print(" aimbotfov = " + Aimbotfov + "  |" ) 
+    print(" Discord RPC = " + drpc)
     print("===================================")
     print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
     print(f'HWID : ' + current_machine_id)
@@ -316,10 +338,13 @@ def main():
     switch = 0 # flashbang
     EnableRCS = False#เปิดปิด rcs
     Enableradar = False
-    global amount
     oldpunchx = 0.0
     oldpunchy = 0.0
     while True:
+        if keyboard.is_pressed("end"):
+            print(CBLUE + "[UNREAL] : Closing...")
+            time.sleep(1)
+            exit()
         # ทําทุกอย่างให้พร้อม เช่นอ่านค่าต่างๆ เเละบวกค่า
         #reduce rpm/wpm     
         localPlayer = pm.read_int(client + dwLocalPlayer)
@@ -413,16 +438,16 @@ def main():
                 entity_team_id = pm.read_int(entity + m_iTeamNum)
                 entity_glow = pm.read_int(entity + m_iGlowIndex)
                 if entity_team_id == 2: #โจร glow
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x4, float(1)) 
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x8, float(0)) 
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0xC, float(0)) 
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x10, float(1)) 
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x4, float(1))#R
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x8, float(0))#G
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0xC, float(0))#B
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x10, float(1))#alpha
                     pm.write_int(glow_manager + entity_glow * 0x38 + 0x24, 1) 
                 elif entity_team_id == 3: #ตํารวจ ct glow
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x4, float(0)) 
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x8, float(0)) 
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0xC, float(1)) 
-                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x10, float(1)) 
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x4, float(0))#R
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x8, float(0))#G
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0xC, float(1))#B
+                    pm.write_float(glow_manager + entity_glow * 0x38 + 0x10, float(1))#alpha
                     pm.write_int(glow_manager + entity_glow * 0x38 + 0x24, 1)
                    
         if keyboard.is_pressed("space"):
@@ -457,18 +482,18 @@ def main():
                 pm.write_int(localPlayer + m_iObserverMode,1)
             else:
                 pm.write_int(localPlayer + m_iObserverMode,0)
-    
-
 
 #เเก้บัค
-def ควยใหญ่():
+def function():
     os.system("cls")
     while True:                                                     
         time.sleep(3)
         try:
-            os.system("cls")
-            main()
-        
+            try:
+                os.system("cls")
+                main()
+            finally:
+                main()
         except:
             os.system("cls")
             if len(sys.argv) < 2:
@@ -481,12 +506,11 @@ def ควยใหญ่():
             print("")
             print("")
             print(CBLUE + "[UNREAL] : The Cheat failed to load / in- lobby" + CEND)
-
             print(CBLUE + "[UNREAL] : Retrying..." + CEND)
 
 if __name__ == '__main__':
-    ควยใหญ่()
-
+    function()
+ 
 
 
  
