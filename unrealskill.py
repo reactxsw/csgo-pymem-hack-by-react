@@ -14,7 +14,6 @@ CYELLOW = '\33[33m'
 
 current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
 
-
 os.system("title Unrealskill")
 #hash-changer ทําให้ไฟล์ดูเเตกต่างควรเปลี่ยนบ่อยๆ เพื่อที่จะ undetect
 
@@ -316,22 +315,22 @@ def main():
         drpc = "OFF"
     
     print(logo)
-    print(f" Login as " + Username + " | Smilewin")
-    print("===================================")
-    print(" Triggerbot     | "+ Triggerbot + " (Hold)")
-    print(" Aimbot         | "+ Aimbot + " (Hold)")
-    print(" Bunnyhop       | 'SPACEBAR' (Hold)")   
-    print(" Wallhack       | "+ Wallhack + " (Toggle)")
-    print(" Radarhack      | "+ Radarhack + " (Toggle)")
-    print(" No flash       | "+ Noflash + " (Toggle")
-    print(" Thirdperson    | "+ Thirdperson + " (Toggle)") 
-    print(" RCS            | "+ RecoilScript + " (Toggle)")
-    print(" Off hack       | 'End' (Press)")
-    print(" aimbotfov = " + Aimbotfov + "  |" ) 
-    print(" Discord RPC = " + drpc)
-    print("===================================")
-    print(f'IP : ' + socket.gethostbyname(socket.gethostname()))  
-    print(f'HWID : ' + current_machine_id)
+    print(Style.BRIGHT + f" Login as " + Username + " | Smilewin")
+    print(Style.BRIGHT + "===================================")
+    print(Style.BRIGHT + " Triggerbot     | "+ Triggerbot + " (Hold)")
+    print(Style.BRIGHT + " Aimbot         | "+ Aimbot + " (Hold)")
+    print(Style.BRIGHT + " Bunnyhop       | 'SPACEBAR' (Hold)")   
+    print(Style.BRIGHT + " Wallhack       | "+ Wallhack + " (Toggle)")
+    print(Style.BRIGHT + " Radarhack      | "+ Radarhack + " (Toggle)")
+    print(Style.BRIGHT + " No flash       | "+ Noflash + " (Toggle")
+    print(Style.BRIGHT + " Thirdperson    | "+ Thirdperson + " (Toggle)") 
+    print(Style.BRIGHT + " RCS            | "+ RecoilScript + " (Toggle)")
+    print(Style.BRIGHT + " Off hack       | 'End' (Press)")
+    print(Style.BRIGHT + " aimbotfov = " + Aimbotfov + "  |" ) 
+    print(Style.BRIGHT + " Discord RPC = " + drpc)
+    print(Style.BRIGHT + "===================================")
+    print(Style.BRIGHT + f'IP : ' + socket.gethostbyname(socket.gethostname()))  
+    print(Style.BRIGHT + f'HWID : ' + current_machine_id)
     
     EnableGlowESP = False #เปิดปิด wallhack
     Enablethird = False #เปิดปิด third person
