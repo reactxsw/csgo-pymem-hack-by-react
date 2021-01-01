@@ -1,10 +1,14 @@
 import colorama, time, os, pymem, keyboard , re ,pymem.process , socket , subprocess ,math ,requests ,ctypes , psutil , urllib, configparser ,os , sys
+from colorama import Fore, init, Back, Style
 from os import system
 from math import sqrt , pi ,atan
 from pypresence import Presence
 from pathlib import Path
-from colorama import Fore, init, Back, Style
 
+
+#information
+
+___lastest_update___ = "1 / 1 / 2021"
 #colour
 CEND      = '\33[0m'
 CGREEN2  = '\33[92m'
@@ -14,8 +18,23 @@ CYELLOW = '\33[33m'
 
 current_machine_id = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
 
+#cmd resize
+def Cheatui():
+    width = "50"
+    height = "25"
+
+    os.system("mode con cols="+width+"lines="+height)
+
+def defaultui():
+    dwidth = "70"
+    dheight = "30"
+
+    os.system("mode con cols="+dwidth+"lines="+dheight)
+
 os.system("title Unrealskill")
 #hash-changer ทําให้ไฟล์ดูเเตกต่างควรเปลี่ยนบ่อยๆ เพื่อที่จะ undetect
+
+defaultui()
 
 def Spinner():
 	l = ['|', '/', '-', '\\']
@@ -81,8 +100,7 @@ try:
     r = requests.get('https://raw.githubusercontent.com/reactxsw/hwiddump/main/hwid.txt')
 except:
     print(CBLUE + '[UNREAL] : Error : Internet connection' + CEND)
-    b = input('')
-    time.sleep(2)
+    input('')
 
 def vacbypasser():
 
@@ -113,7 +131,7 @@ def Authenticator():
         print(CBLUE + '[UNREAL] : Error : HWID not in database' + CEND)
         print(CBLUE + '[UNREAL] : contact admin : REACT#1120 for permission' +CEND)
         print(CBLUE + f'[UNREAL] : Invalid HWID :' + current_machine_id + CEND)
-        a = input('')
+        input('')
     else:
         Spinner()
         os.system("cls")
@@ -124,7 +142,7 @@ Authenticator()
 
 def Check_for_update():
     r = requests.get('https://raw.githubusercontent.com/reactxsw/csgo-pymem-hack-by-react/main/update.txt')
-    if not "ygQkZhGgA7k495PDxvX7BRdsV3NenBeDr9fyU8ma4CccZWVAXpCEwyBERzF6HJUL43gVtAXmYKeSZJdSQNKZ4CRb4TkQbjtKDsHLpU6dYSbgfN767hQaRHFmyu2qaS6T" in r.text:
+    if not "VUuGNlLo5xbn1n5FXfHZkZn3EEJyjOrJGtAVJznPEXtW9ndB5I3xfwAklvdQk8P7jTBYR8bTXlc0za4ASEKtXkxMmkoz5aZFhXQYLiG0ms9jDh0yhrvVzAsJNWbiRYHs" in r.text:
         print(CBLUE + "[UNREAL] : update found" + CEND)
         MessageBox = ctypes.windll.user32.MessageBoxW
         MessageBox(None, 'There is an update available' , 'Update is found', 0)
@@ -152,7 +170,8 @@ def gamecheck():
         print(CBLUE + '[UNREAL] : make sure csgo.exe is running' + CEND)
         MessageBox = ctypes.windll.user32.MessageBoxW
         MessageBox(None, 'CSGO is not running', 'No process found (csgo.exe)', 0)
-        gc = input('')
+        input('')
+        exit()
 
 gamecheck()
 
@@ -160,7 +179,7 @@ def afterbypass():
     if Path("VAC.exe").exists():
         print(CGREEN2 + "[UNREAL] : VACbypasser loaded" + CEND)
     else:
-        print(CBLUE + "[UNREAL] : VAC bypasser failed to load" + CEND)
+        print(CBLUE + "[UNREAL] : VAC bypasser failed to load")
 
 afterbypass()
 
@@ -311,9 +330,8 @@ def main():
         drpc = "ON"
     
     else:
-        return True
         drpc = "OFF"
-    
+
     print(logo)
     print(Style.BRIGHT + f" Login as " + Username + " | Smilewin")
     print(Style.BRIGHT + "===================================")
@@ -340,10 +358,6 @@ def main():
     oldpunchx = 0.0
     oldpunchy = 0.0
     while True:
-        if keyboard.is_pressed("end"):
-            print(CBLUE + "[UNREAL] : Closing...")
-            time.sleep(1)
-            exit()
         # ทําทุกอย่างให้พร้อม เช่นอ่านค่าต่างๆ เเละบวกค่า
         #reduce rpm/wpm     
         localPlayer = pm.read_int(client + dwLocalPlayer)
@@ -485,41 +499,36 @@ def main():
 #เเก้บัค
 def function():
     os.system("cls")
-    while True:                                                     
-        time.sleep(3)
+    while True:
+        if keyboard.is_pressed("end"):
+            print(CBLUE + "[UNREAL] : Closing...")
+            time.sleep(1)
+            exit()                                                     
+        time.sleep(1)
         try:
             try:
                 os.system("cls")
+                Cheatui()
                 main()
-            finally:
-                main()
-        except:
-            os.system("cls")
-            if len(sys.argv) < 2:
+                
+            except:
+                defaultui()
+                os.system("cls")
+                if len(sys.argv) < 2:
  
-                for char in logo:
-                    time.sleep(0.0075)
-                    sys.stdout.write(char)
-                    sys.stdout.flush()
-                time.sleep(0.5)
-            print("")
-            print("")
-            print(CBLUE + "[UNREAL] : The Cheat failed to load / in- lobby" + CEND)
-            print(CBLUE + "[UNREAL] : Retrying..." + CEND)
+                    for char in logo:
+                        time.sleep(0.0075)
+                        sys.stdout.write(char)
+                        sys.stdout.flush()
+                    time.sleep(0.5)
+                print("")
+                print("")
+                print(CBLUE + "[UNREAL] : The Cheat failed to load / in- lobby" + CEND)
+                print(CBLUE + "[UNREAL] : Retrying..." + CEND)
+        
+        except Exception as e:
+            print(e)
+
 
 if __name__ == '__main__':
     function()
- 
-
-
- 
-    
-
-    
-
-
-
-
-
-
-
