@@ -1,6 +1,10 @@
-pip install -r requirements.txt
+i don't support cheating
+i don't cheat myself
+i won't update this
+this is for educational purposes
 
-python 3.8.5
-
-REACT#1120 for any questions
-I do not suppor cheating but IF THAT FUCKER TOGGLE ON FIGHT HIM GOOD REKT HIM SO BAD HE START CRYING
+thai//
+ผมไม่ support การโกง
+ผมไม่โกง
+ผมจะไม่อัพเดต
+ทุกอย่างทําขึ้นมาเพื่อคนที่อยากรู้
